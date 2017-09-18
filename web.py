@@ -41,15 +41,27 @@ driver = webdriver.Chrome(chrome_path)
 
 
 driver.get(url)
+'''
+WebDriverWait(driver, 10).until(
+    EC.visibility_of_element_located((By.CLASS_NAME, "listing_row")))'''
 
+price = driver.find_elements_by_class_name("airline_info_detls")
 
-review = []
-review.append(driver.find_element_by_class_name("listing_row"))
-
-for post in review:
+for post in price:
     print(post.text)
 
-    
+'''timeCa
+html_page =  driver.page_source
+driver.quit
+
+from bs4 import BeautifulSoup
+soup = BeautifulSoup(html_page)
+summary = soup.find("div",{'class':'listing_row'})
+tables = summary.find_all("div",class_= 'listing_row')
+print(tables)
+'''
+
+
 
 
 

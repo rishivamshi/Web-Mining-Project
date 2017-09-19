@@ -83,9 +83,14 @@ def run1():
     driver.get(url)
 
 
-    #airline_info = driver.find_elements_by_class_name("airline_info_detls")
+    airline_info = driver.find_elements_by_class_name("airline_info_detls")
     price = driver.find_elements_by_class_name("num")
+    time = driver.find_elements_by_class_name("time_info")
     for post in price:
+        print(post.text)
+    for post in airline_info:
+        print(post.text)
+    for post in time :
         print(post.text)
 
 

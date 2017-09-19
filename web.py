@@ -8,27 +8,10 @@ Created on Sun Sep 17 21:13:12 2017
 import timeit
 start = timeit.default_timer()
 
+
+
+
 '''
-from bs4 import BeautifulSoup
-import requests
-import pandas as pd
-from pandas import Series,DataFrame
-
-url = 'https://flights.makemytrip.com/makemytrip/search/O/O/E/1/0/0/S/V0/HYD_MAA_24-09-2017?contains=false&remove='
-
-result = requests.get(url)
-c = result.content
-
-
-soup = BeautifulSoup(c)
-summary = soup.find("div",{'class':'price_sectn'})
-tables = summary.find_all("p",class_= 'ng-binding')
-print(tables)
-'''
-
-
-
-
 a = input()
 b = input()
 
@@ -41,25 +24,130 @@ driver = webdriver.Chrome(chrome_path)
 
 
 driver.get(url)
-'''
-WebDriverWait(driver, 10).until(
-    EC.visibility_of_element_located((By.CLASS_NAME, "listing_row")))'''
 
-price = driver.find_elements_by_class_name("airline_info_detls")
 
-for post in price:
+airline_info = driver.find_elements_by_class_name("airline_info_detls")
+price = driver.find_elements_by_class_name("num")
+for post in airline_info:
     print(post.text)
-
-'''timeCa
-html_page =  driver.page_source
-driver.quit
-
-from bs4 import BeautifulSoup
-soup = BeautifulSoup(html_page)
-summary = soup.find("div",{'class':'listing_row'})
-tables = summary.find_all("div",class_= 'listing_row')
-print(tables)
 '''
+
+
+from tkinter import *
+from tkinter import filedialog
+
+
+def mHello():
+    mText=statement.get()
+    mlabel1 = Label(myApp,text=mText).pack()
+
+def myNew():
+    mlabel1 = Label(myApp,text="YO").pack()
+
+def myOpen():
+    myOpen = filedialog.askopenfile()
+    mlabel4 = Label(myApp,text=myOpen).pack()
+
+def mAbout():
+    messagebox.showinfo(title="About",message="This is the about box")
+
+def mQuit():
+    mExit = messagebox.askyesno(title="Quit", message="Are you sure")
+    if mExit > 0:
+        myApp.destroy()
+        
+    
+myApp = Tk()
+
+statement = StringVar()
+
+
+myApp.geometry('450x450+200+200')
+
+myApp.title('Myapp')
+
+mLabel = Label(myApp,text='my label').pack()
+
+mButton = Button(myApp,text ='OK', command = mHello).pack()
+
+
+mEntry = Entry(myApp,textvariable=statement).pack()
+
+
+menubar = Menu(myApp)
+
+
+filemenu = Menu(menubar, tearoff=0)
+
+
+filemenu.add_command(label="New", command=myNew)
+filemenu.add_command(label="Open", command=myOpen)
+filemenu.add_command(label="Save As...")
+filemenu.add_command(label="Close", command=mQuit)
+
+menubar.add_cascade(label="File",menu=filemenu)
+
+
+helpmenu = Menu(menubar, tearoff=0)
+helpmenu.add_command(label="Help docs")
+helpmenu.add_command(label="About",command=mAbout)
+menubar.add_cascade(label="Help",menu=helpmenu)
+
+
+
+
+myApp.config(menu=menubar)
+
+myApp.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

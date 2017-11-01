@@ -85,37 +85,40 @@ def t3h():
 
 def createTableFrame2():
     
-    Button(tableFrame2,text="Hide Me",command=hideTableFrame).grid()
+    
     Button(tableFrame2,text="Show Price Sort Increase",command=ct).grid()
     Button(tableFrame2,text = "Show Sort Duration Decreate", command = th).grid()
     Button(tableFrame2,text = "Show Price Sort Decrease", command = t2h).grid()
     Button(tableFrame2,text = "Show Sort Duration Increase", command = t3h).grid()
 
 def inputs():
-    mLabel1 = Label(WM,text='FROM')
-    mButton1 = Button(WM,text ='OK', command = inputFrom)
-    mEntry1 = Entry(WM,textvariable=fromCity)
+    mLabel1 = Label(tableFrame3,text='FROM')
+    mLabel1.grid()
+    
+    mButton1 = Button(tableFrame3,text ='OK', command = inputFrom).grid()
+    mEntry1 = Entry(tableFrame3,textvariable=fromCity).grid()
+    
+
+    mLabel2 = Label(tableFrame3,text='TO').grid()
+    mButton2 = Button(tableFrame3,text ='OK', command = inputTo).grid()
+    mEntry2 = Entry(tableFrame3,textvariable=toCity).grid()
 
 
-    mLabel2 = Label(WM,text='TO')
-    mButton2 = Button(WM,text ='OK', command = inputTo)
-    mEntry2 = Entry(WM,textvariable=toCity)
+    mLabel3 = Label(tableFrame3,text='DATE').grid()
+    mButton3 = Button(tableFrame3,text ='OK', command = inputDepDate).grid()
+    mEntry3 = Entry(tableFrame3,textvariable=departDate).grid()
 
-
-    mLabel3 = Label(WM,text='DATE')
-    mButton3 = Button(WM,text ='OK', command = inputDepDate)
-    mEntry3 = Entry(WM,textvariable=departDate)
-
-    mLabel4 = Label(WM,text='MONTH').pack()
-    mButton4 = Button(WM,text ='OK', command = inputDepMon)
-    mEntry4 = Entry(WM,textvariable=departMonth)
-
-    mRun = Button(WM,text ='RUN', command = run1)
-
+    mLabel4 = Label(tableFrame3,text='MONTH').grid()
+    mButton4 = Button(tableFrame3,text ='OK', command = inputDepMon).grid()
+    mEntry4 = Entry(tableFrame3,textvariable=departMonth).grid()
+    
+    mRun = Button(tableFrame3,text ='RUN', command = run1).grid()
+    
 
 tableFrames()
 createTableFrame2()
 createTableFrame3()
+inputs()
 #createTableFrame()
 
 

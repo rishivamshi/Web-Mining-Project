@@ -9,6 +9,7 @@ Created on Fri Sep 1 21:13:12 2017
 import timeit
 start = timeit.default_timer()
 import numpy as np
+import pandas as pd
 pr=[]
 tim=[]
 air=[]
@@ -68,11 +69,20 @@ def mQuit():
     if mExit > 0:
         WM.destroy()
         
-def price_sort_increase():
-    sorted(final,key=lambda x:x[7], reverse=False)   
+def price_sort_increase(final):
+    s=sorted(final,key=lambda x:x[7], reverse=False)   
+    return s
+def price_sort_decrease(final):
+    s=sorted(final,key=lambda x:x[7], reverse=True)
+    return s 
+def sort_durationInc(flist):
+    s=sorted(flist,key=lambda x:int(str(x[5][0])+str(x[5][3])), reverse=False)
+    return s 
+def sort_durationDec(flist):
+    s=sorted(flist,key=lambda x:int(str(x[5][0])+str(x[5][3])), reverse=True)
+    return s     
 
-def price_sort_decrease():
-    sorted(final,key=lambda x:x[7], reverse=True)          
+
 
 def run1():
     mtext1 = fromCity.get()
@@ -85,8 +95,9 @@ def run1():
     chrome_path = r"C:\Python27\chromedriver.exe"
     driver = webdriver.Chrome(chrome_path)
     driver2= webdriver.Chrome(chrome_path)
-    driver.get(url)
+    driver.get(url)   
     driver2.get(url2)
+    ##Getting data for make my trip
     airline_info = driver.find_elements_by_class_name("airline_info_detls")
     price = driver.find_elements_by_class_name("num")
     time = driver.find_elements_by_class_name("time_info")
@@ -118,15 +129,15 @@ def run1():
        duration.append(parts[4])
        stopage.append(parts[5])
            
-              
+             
     
     for k in range(0,len(pr)):
         final.append([air[k],source[k],depart[k],destination[k],arrival[k],duration[k],stopage[k],pr[k],dash[k]])
     newlist=sorted(final,key=lambda x:x[7], reverse=False) 
-    print(newlist)
     
     
     
+    ##Getting data for Paytm
 
     airline_info2 = driver2.find_elements_by_class_name("_3H-S")
     price2 = driver2.find_elements_by_class_name("_2gMo")
@@ -164,17 +175,41 @@ def run1():
          
       finalgo.append([conarray2[i],sourcego[i], departgo[i],destgo[i],arrivego[i],timgo[i],stopage2[i],prgo[i]])   
       newlist2=sorted(finalgo,key=lambda x:x[7], reverse=False)
-    print(newlist2)      
-    
+       
+    ##Checking and storing price for flights in Paytm into the array
     for j in range(0,len(newlist)):
         for i in range(0,len(newlist2)):
             if(newlist2[i][0]==newlist[j][0]):
                 newlist[j][8]=(newlist2[i][7])
                 break
                 
-    print("\n\n\n")
-    print(newlist)            
-
+    
+    finallist = newlist[:10]
+    
+    my_df1 = pd.DataFrame(finallist)
+    my_df1.to_csv('finallist.csv', index=False, header=False)
+    
+    price_sort_increase1 = price_sort_increase(finallist)
+    
+    my_df2 = pd.DataFrame(price_sort_increase1)
+    my_df2.to_csv('priceSortIncrease.csv', index=False, header=False)
+    
+    price_sort_decrease1 = price_sort_decrease(finallist)
+    
+    my_df3 = pd.DataFrame(price_sort_decrease1)
+    my_df3.to_csv('priceSortDecrease.csv', index=False, header=False)
+    
+    sortDurationInc1 = sort_durationInc(finallist)
+    
+    my_df4 = pd.DataFrame(sortDurationInc1)
+    my_df4.to_csv('sort_durationInc.csv', index=False, header=False)
+    
+    sortDurationDec1 = sort_durationDec(finallist)
+    
+    my_df5 = pd.DataFrame(sortDurationDec1)
+    my_df5.to_csv('sort_durationDec.csv', index=False, header=False)
+             
+print("finished")
   
 WM = Tk()
 

@@ -2,14 +2,13 @@
 """
 Created on Fri Sep 1 21:13:12 2017
 
-@author: rishi , srikar, devashish,  akhil,ishas
+@author: rishi , srikar, ishas, devashish, akhil
 
 """
 
 import timeit
 start = timeit.default_timer()
 import numpy as np
-import pandas as pd
 pr=[]
 tim=[]
 air=[]
@@ -22,8 +21,10 @@ stopage=[]
 prgo=[]
 timgo=[]
 airgo=[]
+
 sourcegp=[]
 destgo=[]
+dash=[]
 flightnumgo=[]
 airname=[]
 departgo=[]
@@ -68,11 +69,16 @@ def mQuit():
     if mExit > 0:
         WM.destroy()
         
-def price_sort_increase():
-    sorted(final,key=lambda x:x[7], reverse=False)   
-
-def price_sort_decrease():
-    sorted(final,key=lambda x:x[7], reverse=True)          
+def price_sort_increase(final):
+    s=sorted(final,key=lambda x:x[7], reverse=False)   
+    return s
+def price_sort_decrease(final):
+    s=sorted(final,key=lambda x:x[7], reverse=True)
+    return s 
+def sort_duration(flist):
+    s=sorted(flist,key=lambda x:int(str(x[5][0])+str(x[5][3])), reverse=False)
+    return s 
+    
 
 def run1():
     mtext1 = fromCity.get()
@@ -96,6 +102,7 @@ def run1():
         price=price.replace(',','')
         price=int(price)
         pr.append(price)
+        dash.append("-")
         
     for post in airline_info:
         airline=post.text
@@ -105,6 +112,7 @@ def run1():
     for post in time :
         t=post.text
         tim.append(post.text)
+    
     
     conarray=[i+"\n"+j+"\n"+k for i,j,k in zip(tim[::3], tim[1::3],tim[2::3])]
     for element in conarray:
@@ -116,16 +124,15 @@ def run1():
        duration.append(parts[4])
        stopage.append(parts[5])
            
-              
+             
     
     for k in range(0,len(pr)):
-        final.append([air[k],source[k],depart[k],destination[k],arrival[k],duration[k],stopage[k],pr[k]])
-    newlist=sorted(final,key=lambda x:x[7], reverse=True) 
+        final.append([air[k],source[k],depart[k],destination[k],arrival[k],duration[k],stopage[k],pr[k],dash[k]])
+    newlist=sorted(final,key=lambda x:x[7], reverse=False) 
     print(newlist)
     
     
-    my_df = pd.DataFrame(newlist)
-    my_df.to_csv('my_csv.csv', index=False, header=False) 
+    
 
     airline_info2 = driver2.find_elements_by_class_name("_3H-S")
     price2 = driver2.find_elements_by_class_name("_2gMo")
@@ -160,38 +167,32 @@ def run1():
     
     conarray2=[i+" "+j for i,j in zip(airname, flightnumgo)]
     for i in range(0,len(prgo)):
-        
-      finalgo.append([conarray2[k],sourcego[i], departgo[i],destgo[i],arrivego[i],timgo[i],stopage2[i],prgo[i]])   
-      
-    print(finalgo)
-
-        
-class FullScreenApp(object):
-    def __init__(self, master, **kwargs):
-        self.master=master
-        pad=3
-        self._geom='200x200+0+0'
-        master.geometry("{0}x{1}+0+0".format(
-            master.winfo_screenwidth()-pad, master.winfo_screenheight()-pad))
-        master.bind('<Escape>',self.toggle_geom)            
-    def toggle_geom(self,event):
-        geom=self.master.winfo_geometry()
-        print(geom,self._geom)
-        self.master.geometry(self._geom)
-        self._geom=geom    
-        
+         
+      finalgo.append([conarray2[i],sourcego[i], departgo[i],destgo[i],arrivego[i],timgo[i],stopage2[i],prgo[i]])   
+      newlist2=sorted(finalgo,key=lambda x:x[7], reverse=False)
+    print(newlist2)      
+    
+    for j in range(0,len(newlist)):
+        for i in range(0,len(newlist2)):
+            if(newlist2[i][0]==newlist[j][0]):
+                newlist[j][8]=(newlist2[i][7])
+                break
+                
+    print("\n\n\n")
+    print(newlist)
+    
+             
 
   
 WM = Tk()
-app=FullScreenApp(WM)
-
 
 fromCity = StringVar()
 toCity = StringVar()
 departDate = StringVar()
 departMonth = StringVar()
 
-
+### WM object - Labels, Inputs for - From, To, Date, Month and Run
+WM.geometry('450x450+200+200')
 
 WM.title('Web Mining - WEB SCRAPING FOR MAKE-MY-TRIP')
 
@@ -231,24 +232,6 @@ helpmenu = Menu(menubar, tearoff=0)
 helpmenu.add_command(label="Help docs")
 helpmenu.add_command(label="About",command=mAbout)
 menubar.add_cascade(label="Help",menu=helpmenu)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 WM.config(menu=menubar)
 # MenuBar - Ended

@@ -1,39 +1,22 @@
+# Importing Libraries- Tkinter, CSV, numpy and pandas
 from tkinter import *
 from tkinter import filedialog
 import csv
 from tables import createStandardTable as cst
 import numpy as np
 import pandas as pd
-pr, tim = [], []
 
-air=[]
-depart=[]
-arrival=[]
-source=[]
-destination=[]
-duration=[]
-stopage=[]
-prgo=[]
-timgo=[]
-airgo=[]
-sourcegp=[]
-destgo=[]
-dash=[]
-flightnumgo=[]
-airname=[]
-departgo=[]
-arrivego=[]
-airname=[]
-flynum=[]
-finalgo=[]
-stopage2=[]
-final=[]
-airname1=[]
-flight1=[]
+# Declaring Variables of list datastructure for sorting.
+pr, tim, air, depart, arrival, source, destination, duration, stopage, prgo = [], [], [], [], [], [], [], [], [], []
+timgo, airgo, sourcegp, destgo, dash, flightnumgo, airname = [], [], [], [], [], [], []
+departgo, arrivego, airname, flynum, finalgo, stopage2, final, airname1, flight1 = [], [], [], [], [], [], [], [], []
 
+
+#Creating TK() object
 window = Tk()
 
-# Functions
+# Declaring all the functions
+# Functions for taking inputs
 def inputFrom():
     mText=fromCity.get()
     #mlabel1 = Label(tableFrame3,text=mText).grid()
@@ -47,17 +30,14 @@ def inputDepDate():
 def inputDepMon():
     mText=departMonth.get()
     #mlabel1 = Label(tableFrame3,text=mText).grid()
-
-
-
 def mAbout():
     messagebox.showinfo(title="About",message="This is the about box")
-
 def mQuit():
     mExit = messagebox.askyesno(title="Quit", message="Are you sure")
     if mExit > 0:
         window.destroy()
-        
+
+# Functions For Sorting       
 def price_sort_increase(final):
     s=sorted(final,key=lambda x:x[7], reverse=False)   
     return s
@@ -72,7 +52,7 @@ def sort_durationDec(flist):
     return s     
 
 
-
+# Main Function where all the process happens
 def run1():
     mtext1 = fromCity.get()
     mtext2 = toCity.get()
@@ -86,28 +66,24 @@ def run1():
     driver2= webdriver.Chrome(chrome_path)
     driver.get(url)   
     driver2.get(url2)
+    
     ##Getting data for make my trip
     airline_info = driver.find_elements_by_class_name("airline_info_detls")
     price = driver.find_elements_by_class_name("num")
     time = driver.find_elements_by_class_name("time_info")
-    for post in price:
-        
+    for post in price:      
         price=post.text
         price=price.replace(',','')
         price=int(price)
         pr.append(price)
-        dash.append("-")
-        
+        dash.append("-")        
     for post in airline_info:
         airline=post.text
         airline=airline.replace('\n',' ')
-        air.append(airline)
-        
+        air.append(airline)        
     for post in time :
         t=post.text
-        tim.append(post.text)
-    
-    
+        tim.append(post.text)    
     conarray=[i+"\n"+j+"\n"+k for i,j,k in zip(tim[::3], tim[1::3],tim[2::3])]
     for element in conarray:
        parts = element.split('\n')
@@ -117,14 +93,9 @@ def run1():
        destination.append(parts[3])
        duration.append(parts[4])
        stopage.append(parts[5])
-           
-             
-    
     for k in range(0,len(pr)):
         final.append([air[k],source[k],depart[k],destination[k],arrival[k],duration[k],stopage[k],pr[k],dash[k]])
     newlist=sorted(final,key=lambda x:x[7], reverse=False) 
-    
-    
     
     ##Getting data for Paytm
 
@@ -137,17 +108,13 @@ def run1():
         pri=post.text
         pri=pri.replace(',','')
         pri=int(pri)
-        prgo.append(pri)
-    
+        prgo.append(pri)    
     for post in stopgo:
-        stopage2.append(post.text)
-        
+        stopage2.append(post.text)        
     for post in airline_info2:
-        airgo.append(post.text)
-        
+        airgo.append(post.text)        
     for post in time2 :
-        timgo.append(post.text)
-    
+        timgo.append(post.text)   
     for post in fly :
         flynum.append(post.text)
     
@@ -160,8 +127,7 @@ def run1():
     destgo=flynum[2::4]
     
     conarray2=[i+" "+j for i,j in zip(airname, flightnumgo)]
-    for i in range(0,len(prgo)):
-         
+    for i in range(0,len(prgo)):         
       finalgo.append([conarray2[i],sourcego[i], departgo[i],destgo[i],arrivego[i],timgo[i],stopage2[i],prgo[i]])   
       newlist2=sorted(finalgo,key=lambda x:x[7], reverse=False)
        
@@ -171,8 +137,8 @@ def run1():
             if(newlist2[i][0]==newlist[j][0]):
                 newlist[j][8]=(newlist2[i][7])
                 break
-                
     
+    ## Exporting all the values into individual CSV files                
     finallist = newlist[:10]
     
     my_df1 = pd.DataFrame(finallist)
@@ -199,101 +165,92 @@ def run1():
     my_df5.to_csv('sort_durationDec.csv', index=False, header=False)
 
 
-
+## Creating Frames for input, Sorting buttons and output
 tableFrame = Frame(window, bg='cyan', width=450, height=50, pady=3)
 tableFrame2 = Frame(window, bg='gray2', width=50, height=40, padx=3, pady=3)
 tableFrame3 = Frame(window, bg = 'red', width = 200, height = 300, padx= 3, pady = 3)
 
+# Creating the Variables for Inputs
 fromCity = StringVar()
 toCity = StringVar()
 departDate = StringVar()
 departMonth = StringVar()
 
+#Declaring the title for the window
 window.title('Web Mining - WEB SCRAPING FOR MAKE-MY-TRIP')
+
 
 def tableFrames():
     tableFrame3.grid()
     tableFrame2.grid()
-    tableFrame.grid()
-    
-    
+    tableFrame.grid()    
 
- #tableFrame = Frame(window)
+#create a global newtable grid.
 f = open("my_csv.csv")
 newtable = cst(f,tableFrame)
 
-
-
-
 def createTableFrame():
-    #Your csv file can contain as many rows and colums as needed
     f = open("sort_durationDec.csv")
+    global newtable
+    newtable = cst(f,tableFrame)
+    newtable.grid()
 
-    #note here I have sent it root but you can also send it a frame
+def createTableFrame2():
+    f = open("my_csv.csv")
     global newtable
     newtable = cst(f,tableFrame)
     newtable.grid()
 
 def createTableFrame3():
-    #Your csv file can contain as many rows and colums as needed
     f = open("priceSortIncrease.csv")
-
-    #note here I have sent it root but you can also send it a frame
     global newtable
     newtable = cst(f,tableFrame)
     newtable.grid()
+    
 def createTableFrame4():
-    #Your csv file can contain as many rows and colums as needed
     f = open("priceSortDecrease.csv")
-
-    #note here I have sent it root but you can also send it a frame
     global newtable
     newtable = cst(f,tableFrame)
     newtable.grid()
+    
 def createTableFrame5():
-    #Your csv file can contain as many rows and colums as needed
     f = open("sort_durationInc.csv")
-
-    #note here I have sent it root but you can also send it a frame
     global newtable
     newtable = cst(f,tableFrame)
     newtable.grid()
-
-
-
 
 def ct():
     global newtable
     newtable.destroy()
     createTableFrame3()
-    tableFrame.grid()    
+    tableFrame.grid()  
+    
 def th():
     global newtable
     newtable.destroy()
     createTableFrame()
     tableFrame.grid()
+    
 def t2h():
     global newtable
     newtable.destroy()
     createTableFrame4()
     tableFrame.grid()
-
+    
 def t3h():
     global newtable
     newtable.destroy()
     createTableFrame5()
     tableFrame.grid()
 
-
-def createTableFrame2():
-    
-    
+def sorting():  
     Button(tableFrame2,text="Show Price Sort Increase",command=ct).grid()
     Button(tableFrame2,text = "Show Sort Duration Decreate", command = th).grid()
     Button(tableFrame2,text = "Show Price Sort Decrease", command = t2h).grid()
     Button(tableFrame2,text = "Show Sort Duration Increase", command = t3h).grid()
 
 
+# Input
 mLabel1 = Label(tableFrame3,text='FROM') 
 mLabel1.grid()
     
@@ -318,15 +275,8 @@ mRun = Button(tableFrame3,text ='RUN', command = run1).grid()
     
 
 tableFrames()
+sorting()
 createTableFrame2()
-createTableFrame3()
-
-#createTableFrame()
-
-
-
-
-
 
 
 window.mainloop()

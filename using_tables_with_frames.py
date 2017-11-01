@@ -51,6 +51,8 @@ def sort_durationDec(flist):
     s=sorted(flist,key=lambda x:int(str(x[5][0])+str(x[5][3])), reverse=True)
     return s     
 
+MMT = ["HYD", "MAA","BOM", "DEL", "CCU", "AMD", "BLR", "NAG", "CCJ", "PNQ"]
+Ptm= ["HYD-Hyderabad","MAA-Chennai","BOM-Mumbai","DEL-Delhi","CCU-Kolkata","AMD-Ahmedabad","BLR-Bengaluru","NAG-Nagpur","CCJ-Kozhikode","PNQ-Pune"]
 
 # Main Function where all the process happens
 def run1():
@@ -58,8 +60,10 @@ def run1():
     mtext2 = toCity.get()
     mtext3 = departDate.get()
     mtext4 = departMonth.get()
+    ptext1 = Ptm[MMT.index(mtext1)]
+    ptext2 = Ptm[MMT.index(mtext2)]
     url = "https://flights.makemytrip.com/makemytrip/search/O/O/E/1/0/0/S/V0/"+mtext1+"_"+mtext2+"_"+mtext3+"-"+mtext4+"-2017?contains=false&remove="
-    url2= "https://paytm.com/flights/flightSearch/MAA-Chennai/DEL-Delhi/1/0/0/E/2017-"+mtext4+"-"+mtext3
+    url2= "https://paytm.com/flights/flightSearch/"+ptext1+"/"+ptext2+"/1/0/0/E/2017-"+mtext4+"-"+mtext3
     from selenium import webdriver
     chrome_path = r"C:\Python27\chromedriver.exe"
     driver = webdriver.Chrome(chrome_path)
@@ -166,9 +170,9 @@ def run1():
 
 
 ## Creating Frames for input, Sorting buttons and output
-tableFrame = Frame(window, bg='cyan', width=450, height=50, pady=3)
-tableFrame2 = Frame(window, bg='gray2', width=50, height=40, padx=3, pady=3)
-tableFrame3 = Frame(window, bg = 'red', width = 200, height = 300, padx= 3, pady = 3)
+tableFrame = Frame(window, bg='cyan', width=450, height=50, pady=10)
+tableFrame2 = Frame(window, bg='gray2', width=450, height=40, padx=50, pady=20)
+tableFrame3 = Frame(window, bg = 'red', width = 450, height = 300, padx= 50, pady = 20)
 
 # Creating the Variables for Inputs
 fromCity = StringVar()
@@ -191,6 +195,12 @@ newtable = cst(f,tableFrame)
 
 def createTableFrame():
     f = open("sort_durationDec.csv")
+    global newtable
+    newtable = cst(f,tableFrame)
+    newtable.grid()
+    
+def Header():
+    f = open("my_csv.csv")
     global newtable
     newtable = cst(f,tableFrame)
     newtable.grid()
@@ -276,6 +286,7 @@ mRun = Button(tableFrame3,text ='RUN', command = run1).grid()
 
 tableFrames()
 sorting()
+Header()
 createTableFrame2()
 
 

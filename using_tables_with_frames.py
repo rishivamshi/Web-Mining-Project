@@ -254,34 +254,33 @@ def t3h():
     tableFrame.grid()
 
 def sorting():  
-    Button(tableFrame2,text="Show Price Sort Increase",command=ct).grid()
-    Button(tableFrame2,text = "Show Sort Duration Decreate", command = th).grid()
-    Button(tableFrame2,text = "Show Price Sort Decrease", command = t2h).grid()
-    Button(tableFrame2,text = "Show Sort Duration Increase", command = t3h).grid()
+    Button(tableFrame2,text="Show Price Sort Increase",command=ct).grid(row = 0,column = 0 , padx = 15, pady = 10)
+    Button(tableFrame2,text = "Show Price Sort Decrease", command = t2h).grid(row = 0,column = 1 , padx = 15, pady = 10)
+    Button(tableFrame2,text = "Show Sort Duration Increase", command = t3h).grid(row = 0,column = 2 , padx = 15, pady = 10)
+    Button(tableFrame2,text = "Show Sort Duration Decrease", command = th).grid(row = 0,column = 3 , padx = 15, pady = 10)
+    
+    
 
 
 # Input
 mLabel1 = Label(tableFrame3,text='FROM') 
-mLabel1.grid()
+mLabel1.grid(row=0,column = 0,sticky = W )
+mEntry1 = Entry(tableFrame3,textvariable=fromCity).grid(row = 0,column = 1 , padx = 20, pady = 10)
+mButton1 = Button(tableFrame3,text ='OK', command = inputFrom).grid(row=0,column = 2)  
+
+mLabel2 = Label(tableFrame3,text='TO').grid(row=1,column = 0, sticky = W)
+mEntry2 = Entry(tableFrame3,textvariable=toCity).grid(row=1,column = 1 , pady = 10)
+mButton2 = Button(tableFrame3,text ='OK', command = inputTo).grid(row=1,column = 2)
+
+mLabel3 = Label(tableFrame3,text='DATE').grid(row=2,column = 0, sticky = W)
+mEntry3 = Entry(tableFrame3,textvariable=departDate).grid(row=2,column = 1, pady = 10)
+mButton3 = Button(tableFrame3,text ='OK', command = inputDepDate).grid(row=2,column = 2)
+
+mLabel4 = Label(tableFrame3,text='MONTH').grid(row=3,column = 0, sticky = W)
+mEntry4 = Entry(tableFrame3,textvariable=departMonth).grid(row=3,column = 1, pady = 10)
+mButton4 = Button(tableFrame3,text ='OK', command = inputDepMon).grid(row=3,column = 2)
     
-mButton1 = Button(tableFrame3,text ='OK', command = inputFrom).grid()
-mEntry1 = Entry(tableFrame3,textvariable=fromCity).grid()
-    
-
-mLabel2 = Label(tableFrame3,text='TO').grid()
-mButton2 = Button(tableFrame3,text ='OK', command = inputTo).grid()
-mEntry2 = Entry(tableFrame3,textvariable=toCity).grid()
-
-
-mLabel3 = Label(tableFrame3,text='DATE').grid()
-mButton3 = Button(tableFrame3,text ='OK', command = inputDepDate).grid()
-mEntry3 = Entry(tableFrame3,textvariable=departDate).grid()
-
-mLabel4 = Label(tableFrame3,text='MONTH').grid()
-mButton4 = Button(tableFrame3,text ='OK', command = inputDepMon).grid()
-mEntry4 = Entry(tableFrame3,textvariable=departMonth).grid()
-    
-mRun = Button(tableFrame3,text ='RUN', command = run1).grid()
+mRun = Button(tableFrame3,text ='RUN', command = run1).grid(row = 4, column = 0, sticky = W)
     
 
 tableFrames()

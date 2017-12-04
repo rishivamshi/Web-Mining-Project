@@ -45,10 +45,10 @@ def price_sort_decrease(final):
     s=sorted(final,key=lambda x:x[7], reverse=True)
     return s 
 def sort_durationInc(flist):
-    s=sorted(flist,key=lambda x:int(str(x[5][0])+str(x[5][3])), reverse=False)
+    s=sorted(flist,key=lambda x:int(str(x[5][0])+str(x[5][3])+str(x[5][4])), reverse=False)
     return s 
 def sort_durationDec(flist):
-    s=sorted(flist,key=lambda x:int(str(x[5][0])+str(x[5][3])), reverse=True)
+    s=sorted(flist,key=lambda x:int(str(x[5][0])+str(x[5][3])+str(x[5][4])), reverse=True)
     return s     
 
 MMT = ["HYD", "MAA","BOM", "DEL", "CCU", "AMD", "BLR", "NAG", "CCJ", "PNQ"]
@@ -143,7 +143,8 @@ def run1():
                 break
     
     ## Exporting all the values into individual CSV files                
-    finallist = newlist[:10]
+    finallist = newlist[:15]
+    
     
     my_df1 = pd.DataFrame(finallist)
     my_df1.to_csv('finallist.csv', index=False, header=False)
@@ -181,7 +182,7 @@ departDate = StringVar()
 departMonth = StringVar()
 
 #Declaring the title for the window
-window.title('Web Mining - WEB SCRAPING FOR MAKE-MY-TRIP')
+window.title('Web Mining - WEB SCRAPING FOR MAKE-MY-TRIP and PAYTM')
 
 
 def tableFrames():

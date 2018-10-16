@@ -8,6 +8,8 @@ from tables
 import createStandardTable as cst
 import numpy as np
 import pandas as pd
+from selenium
+import webdriver
 
 # Declaring Variables of list datastructure
 for sorting.
@@ -63,8 +65,6 @@ ptext1 = Ptm[MMT.index(mtext1)]
 ptext2 = Ptm[MMT.index(mtext2)]
 url = "https://flights.makemytrip.com/makemytrip/search/O/O/E/1/0/0/S/V0/" + mtext1 + "_" + mtext2 + "_" + mtext3 + "-" + mtext4 + "-2017?contains=false&remove="
 url2 = "https://paytm.com/flights/flightSearch/" + ptext1 + "/" + ptext2 + "/1/0/0/E/2017-" + mtext4 + "-" + mtext3
-from selenium
-import webdriver
 chrome_path = r "C:\Python27\chromedriver.exe"
 driver = webdriver.Chrome(chrome_path)
 driver2 = webdriver.Chrome(chrome_path)

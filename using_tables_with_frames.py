@@ -8,7 +8,7 @@ from tables
 import createStandardTable as cst
 import numpy as np
 import pandas as pd
-from selenium
+from selenium 
 import webdriver
 
 # Declaring Variables of list datastructure
